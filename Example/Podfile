@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Insensibility_Example' do
+  pod 'Insensibility', :path => '../'
+
+  target 'Insensibility_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
