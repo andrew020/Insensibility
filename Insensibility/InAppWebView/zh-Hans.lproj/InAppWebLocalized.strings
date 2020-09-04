@@ -1,0 +1,10 @@
+/* 
+  InAppWebLocalized.strings
+  InAppWebView
+
+  Created by 李宗良 on 2020/8/31.
+  Copyright © 2020 andrew. All rights reserved.
+*/
+
+"js_alert_ok" = "확정 하 다";
+"js_alert_cancel" = "취소 하 다.";

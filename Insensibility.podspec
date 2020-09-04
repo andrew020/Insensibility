@@ -1,42 +1,48 @@
-#
-# Be sure to run `pod lib lint Insensibility.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
-  s.name             = 'Insensibility'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of Insensibility.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
-  s.homepage         = 'https://github.com/adx-developer/Insensibility'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'adx-developer' => 'andrew2007@foxmail.com' }
-  s.source           = { :git => 'https://github.com/adx-developer/Insensibility.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '8.0'
-
-  s.source_files = 'Insensibility/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'Insensibility' => ['Insensibility/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+    s.name             = 'Insensibility'
+    s.version          = '1.0.0'
+    s.summary          = 'This pod have some insensibility views.'
+    s.description      = <<-DESC
+    I am lazy, so create this pod.
+    views in this pod all use base class, just add some extention actions. others are the some as normal one.
+    DESC
+    
+    s.homepage         = 'https://github.com/andrew020/Insensibility'
+    # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+    s.license          = { :type => 'MIT', :file => 'LICENSE' }
+    s.author           = { 'andrew020' => 'andrew2007@foxmail.com' }
+    s.source           = { :git => 'https://github.com/adx-developer/Insensibility.git', :tag => s.version.to_s }
+    # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+    
+    s.ios.deployment_target = '10.0'
+    s.framework = 'UIKit'
+    s.swift_version = '5.0'
+    
+    # Reactive
+    s.subspec 'Reactive' do |reactive|
+        reactive.dependency 'ReactiveSwift'
+        reactive.dependency 'ReactiveCocoa'
+    end
+    
+    # ActivityButton
+    s.subspec 'ActivityButton' do |activitybutton|
+        activitybutton.source_files = 'Insensibility/ActivityButton/ActivityButton.swift'
+    end
+    s.subspec 'ActivityButtonReactive' do |activitybutton_reactive|
+        activitybutton_reactive.source_files = 'Insensibility/ActivityButton/ActivityButton_Reactive.swift'
+        activitybutton_reactive.dependency 'Insensibility/ActivityButton'
+        activitybutton_reactive.dependency 'Insensibility/Reactive'
+    end
+    
+    # InAppWebview
+    s.subspec 'InAppWebview' do |inapp_webview|
+        inapp_webview.source_files = 'Insensibility/InAppWebview/*.*'
+        inapp_webview.dependency 'SnapKit'
+    end
+    
+    # PagingTableView
+    s.subspec 'PagingFetchTableView' do |pagingfetch_tableview|
+        pagingfetch_tableview.source_files = 'Insensibility/PagingFetchTableView/UITableView+PagingFetch.swift'
+    end
+    
 end
