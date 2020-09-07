@@ -47,7 +47,7 @@ Pod::Spec.new do |s|
     
     # FadePresentationViewController
     s.subspec 'FadePresentationViewController' do |fadepresentationviewcontroller|
-        fadepresentationviewcontroller.source_files = 'Insensibility/FadePresentationViewController/*.swift'
+        fadepresentationviewcontroller.source_files = 'Insensibility/FadePresentationViewController/*.*'
     end
     
 end
