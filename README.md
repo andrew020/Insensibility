@@ -22,7 +22,7 @@ pod 'Insensibility'
 
 ## Author
 
-adx-developer, andrew2007@foxmail.com
+andrew2007@foxmail.com
 
 ## License
 
