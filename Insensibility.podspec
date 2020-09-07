@@ -45,4 +45,9 @@ Pod::Spec.new do |s|
         pagingfetch_tableview.source_files = 'Insensibility/PagingFetchTableView/UITableView+PagingFetch.swift'
     end
     
+    # FadePresentationViewController
+    s.subspec 'FadePresentationViewController' do |fadepresentationviewcontroller|
+        fadepresentationviewcontroller.source_files = 'Insensibility/FadePresentationViewController/*.swift'
+    end
+    
 end
