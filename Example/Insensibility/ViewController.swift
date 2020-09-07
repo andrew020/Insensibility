@@ -52,6 +52,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.textLabel?.text = "\(indexPath.row)"
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let label = UILabel()
+        label.text = "\(indexPath.row)"
+        
+        let vc = FadePresentationViewController()
+        vc.presentingBlock = { isShow in
+            if isShow {
+                vc.view.addSubview(label)
+                label.snp.makeConstraints { (maker) in
+                    maker.center.equalToSuperview()
+                }
+            }
+        }
+        vc.view.backgroundColor = UIColor(white: 0, alpha: 0.4);
+        
+        present(vc, animated: true, completion: nil)
+    }
 
 }
 
