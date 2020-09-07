@@ -1,6 +1,6 @@
 # Insensibility
 
-[![CI Status](https://img.shields.io/travis/adx-developer/Insensibility.svg?style=flat)](https://travis-ci.org/adx-developer/Insensibility)
+[![CI Status](https://img.shields.io/travis/andrew020/Insensibility.svg?style=flat)](https://travis-ci.org/andrew020/Insensibility)
 [![Version](https://img.shields.io/cocoapods/v/Insensibility.svg?style=flat)](https://cocoapods.org/pods/Insensibility)
 [![License](https://img.shields.io/cocoapods/l/Insensibility.svg?style=flat)](https://cocoapods.org/pods/Insensibility)
 [![Platform](https://img.shields.io/cocoapods/p/Insensibility.svg?style=flat)](https://cocoapods.org/pods/Insensibility)

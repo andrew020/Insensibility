@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Insensibility
 //
-//  Created by adx-developer on 09/03/2020.
-//  Copyright (c) 2020 adx-developer. All rights reserved.
+//  Created by andrew020 on 09/03/2020.
+//  Copyright (c) 2020 andrew020. All rights reserved.
 //
 
 import UIKit
