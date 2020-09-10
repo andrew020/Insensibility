@@ -50,4 +50,9 @@ Pod::Spec.new do |s|
         fadepresentationviewcontroller.source_files = 'Insensibility/FadePresentationViewController/*.*'
     end
     
+    # ChainCaller
+    s.subspec 'ChainCaller' do |chaincaller|
+        chaincaller.source_files = 'Insensibility/ChainCaller/*.*'
+    end
+    
 end

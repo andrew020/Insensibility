@@ -22,7 +22,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         tableView.refreshBlock = { [unowned self] completion in
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            let url: String = "testurl"
+            ChainCaller.shared().startChain(
+                identifier: nil, parameter: url
+            ).addProcess { (value, completion) in
+                // 模拟检查url
+                let url = value.parameters as! String
+                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 3) {
+                    completion((nil, false, url + ". is correct"))
+                }
+            }.addProcess { (value, completion) in
+                // 模拟拼装url
+                let url = value.parameters as! String
+                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 3) {
+                    completion((nil, false, url + ". this path extention"))
+                }
+            }.result { (value) in
+                // 完成之后刷新
+                let url = value.parameters
                 self.dataSource = Array(repeating: "", count: 10)
                 self.tableView.reloadData()
                 completion(false)
