@@ -9,26 +9,33 @@
 import UIKit
 import WebKit
 
-@available(iOS 8.0, *)
 extension WKProcessPool {
     static let shared = {
         return WKProcessPool()
     }()
 }
 
-@available(iOS 10.0, *)
-open class InAppWebView: WKWebView {
+/// 防止循环引用
+public class InAppWebViewScriptMessageHandlerWrapper: NSObject, WKScriptMessageHandler {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        handler?.userContentController(userContentController, didReceive: message)
+    }
+    
+    public weak var handler: WKScriptMessageHandler? = nil
+}
+
+open class InAppWebView : WKWebView {
     
     public var openLinkInNewWindow: Bool = false
     weak public var viewController: UIViewController?
-    
-    weak private var inAppNavigationDelegate: WKNavigationDelegate?
+
     weak internal var inAppUIDelegate: WKUIDelegate?
     
-    class func defaultConfigration() -> WKWebViewConfiguration {
+    public class func defaultConfigration() -> WKWebViewConfiguration {
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.default()
         configuration.processPool = WKProcessPool.shared
+        configuration.userContentController = WKUserContentController()
         return configuration
     }
     
@@ -39,5 +46,15 @@ open class InAppWebView: WKWebView {
     
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    /// 建议使用这个方法增加 js 调用监控，内部会生成一个中间变量，防止循环引用
+    /// - Parameters:
+    ///   - handler: 回调对象
+    ///   - name: 方法名
+    public func addJSHandler(_ handler: WKScriptMessageHandler, name: String) -> Void {
+        let wrapper = InAppWebViewScriptMessageHandlerWrapper()
+        wrapper.handler = handler
+        configuration.userContentController.add(wrapper, name: name)
     }
 }

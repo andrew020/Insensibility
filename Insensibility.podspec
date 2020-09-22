@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'Insensibility'
-    s.version          = '1.1.0'
+    s.version          = '1.2.0'
     s.summary          = 'This pod have some insensibility views.'
     s.description      = <<-DESC
     I am lazy, so create this pod.
@@ -36,6 +36,7 @@ Pod::Spec.new do |s|
     
     # InAppWebview
     s.subspec 'InAppWebview' do |inapp_webview|
+        inapp_webview.framework = 'WebKit'
         inapp_webview.source_files = 'Insensibility/InAppWebview/*.*'
         inapp_webview.dependency 'SnapKit'
     end
