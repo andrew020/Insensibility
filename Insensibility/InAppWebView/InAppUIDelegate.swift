@@ -75,8 +75,16 @@ extension InAppWebView: WKUIDelegate {
         var newWebView: InAppWebView? = nil
         if (openLinkInNewWindow) {
             if let viewController = viewControllerCanBePresenting() {
+                var popViewController: UIViewController
                 let webViewController = InAppWebViewController(configuration: configuration);
-                viewController.present(webViewController, animated: true, completion: nil);
+                if #available(iOS 13.0, *) {
+                    popViewController = webViewController
+                } else {
+                    let nv = UINavigationController(rootViewController: webViewController)
+                    webViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(webViewDidClose(_:)))
+                    popViewController = nv
+                }
+                viewController.present(popViewController, animated: true, completion: nil);
                 newWebView = webViewController.webView
             } else {
                 let outsidePadding: CGFloat = 25.0
@@ -162,14 +170,7 @@ extension InAppWebView: WKUIDelegate {
             return
         }
         
-        guard let webView = webView as? InAppWebView else {
-            return
-        }
-        if webView.viewController != nil && webView.viewController != viewController {
-            webView.viewController?.dismiss(animated: true, completion: nil)
-        } else {
-            webView.removeFromSuperview()
-        }
+        self.removeFromSuperview()
     }
 
     

@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import SnapKit
 
-public class InAppWebViewController: UIViewController {
+open class InAppWebViewController: UIViewController, WKUIDelegate {
 
     public let webView: InAppWebView!
     private var progressBar: UIProgressView! = UIProgressView()
@@ -29,25 +29,32 @@ public class InAppWebViewController: UIViewController {
         super.init(coder: coder)
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = UIColor.white
+        
         view.addSubview(webView)
         webView.snp.makeConstraints { (maker) in
-            maker.edges.equalTo(view)
+            if #available(iOS 11.0, *) {
+                maker.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            } else {
+                maker.top.equalToSuperview().offset(20)
+            }
+            maker.bottom.leading.trailing.equalToSuperview()
         }
         
         progressBar.tintColor = UIColor.blue
         progressBar.isHidden = true
         view.addSubview(progressBar)
         progressBar.snp.makeConstraints { (maker) in
-            maker.top.trailing.leading.equalTo(view)
+            maker.top.trailing.leading.equalTo(webView)
             maker.height.equalTo(2)
         }
         
-        webView.load(URLRequest(url: URL(string: "https://www.baidu.com")!))
-        
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: [.new], context: nil)
+        webView.viewController = self
+        webView.uiDelegate = self
     }
     
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -57,14 +64,8 @@ public class InAppWebViewController: UIViewController {
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    public func webViewDidClose(_ webView: WKWebView) {
+        let viewcontroller = (navigationController ?? self)
+        viewcontroller.dismiss(animated: true, completion: nil)
     }
-    */
-
 }

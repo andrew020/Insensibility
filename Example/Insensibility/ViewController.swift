@@ -11,24 +11,14 @@ import Insensibility
 import SnapKit
 import WebKit
 
-class ViewController: UIViewController, WKScriptMessageHandler {
+class ViewController: InAppWebViewController {
 
-    var dataSource: [String] = []
-    let webView = InAppWebView(frame: .zero)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        view.addSubview(webView)
-        webView.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
-        }
-        webView.addJSHandler(self, name: "closeView")
-        webView.load(URLRequest(url: URL(string: "https://www.baidu.com")!))
-    }
-
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
+        webView.load(URLRequest(url: URL(string: "https://modubiz.co.kr/new/index.html")!))
+        webView.openLinkInNewWindow = true
     }
 }
 
