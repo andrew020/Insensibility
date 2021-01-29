@@ -38,6 +38,7 @@ public class FadePresentation: NSObject, UIViewControllerAnimatedTransitioning, 
         if presenting {
             containerView.addSubview(toVC.view)
             toVC.view.alpha = 0
+            toVC.view.frame = fromVC.view.frame;
             UIView.animate(withDuration: duration, animations: {
                 self.toVC.view.alpha = 1
                 self.animationBlock?(self.presenting)

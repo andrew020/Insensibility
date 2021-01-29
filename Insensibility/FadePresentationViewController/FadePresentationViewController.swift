@@ -16,6 +16,15 @@ open class FadePresentationViewController: UIViewController, UIViewControllerTra
     /// 点击空白处收起 view controller, 默认 YES
     public var dismissByTappingBlank: Bool = true
     
+    /// 背景颜色
+    public var backgroundColor: UIColor = UIColor(white: 0, alpha: 0.75) {
+        didSet {
+            if isViewLoaded {
+                view.backgroundColor = backgroundColor
+            }
+        }
+    }
+    
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         fadePresentationSetup()
@@ -29,7 +38,7 @@ open class FadePresentationViewController: UIViewController, UIViewControllerTra
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(white: 0, alpha: 0.75)
+        view.backgroundColor = backgroundColor;
 
         let blankView = UIView()
         blankView.backgroundColor = UIColor.clear
@@ -67,6 +76,50 @@ open class FadePresentationViewController: UIViewController, UIViewControllerTra
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if presentingViewController != nil {
             let animatedTransitioning = FadePresentation(fromVC: self, toVC: presentingViewController!, animationBlock: presentingBlock)
+            animatedTransitioning.presenting = false
+            return animatedTransitioning
+        }
+        return nil
+    }
+}
+
+open class FadePresentationNavigationController: UINavigationController, UIViewControllerTransitioningDelegate {
+    
+    public override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+        fadePresentationSetup()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        fadePresentationSetup()
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        fadePresentationSetup()
+    }
+    
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor.clear
+    }
+    
+    func fadePresentationSetup() -> Void {
+        modalPresentationStyle = .custom
+        transitioningDelegate = self
+        definesPresentationContext = true
+    }
+    
+    //MARK: UIViewControllerTransitioningDelegate
+    
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return FadePresentation(fromVC: presenting, toVC: presented, animationBlock: nil)
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if let presentingViewController = presentingViewController {
+            let animatedTransitioning = FadePresentation(fromVC: self, toVC: presentingViewController, animationBlock: nil)
             animatedTransitioning.presenting = false
             return animatedTransitioning
         }

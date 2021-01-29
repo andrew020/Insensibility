@@ -11,14 +11,13 @@ import Insensibility
 import SnapKit
 import WebKit
 
-class ViewController: InAppWebViewController {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        webView.load(URLRequest(url: URL(string: "https://modubiz.co.kr/new/index.html")!))
-        webView.openLinkInNewWindow = true
+        
     }
 }
 

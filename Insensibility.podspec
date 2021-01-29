@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'Insensibility'
-    s.version          = '1.2.0'
+    s.version          = '1.3.0'
     s.summary          = 'This pod have some insensibility views.'
     s.description      = <<-DESC
     I am lazy, so create this pod.
